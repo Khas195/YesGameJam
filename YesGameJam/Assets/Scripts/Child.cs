@@ -7,6 +7,7 @@ public class Child : MonoBehaviour {
 	public float speed;
 	public Mother mother;
 	public float maxDistanceFromMother;
+	public GameObject model;
 	bool moving = false;
 	bool disconnect = false;
 	bool runToMother = false;
@@ -55,19 +56,38 @@ public class Child : MonoBehaviour {
 		isCaptured = true;
     }
 
-    public void GoToTarget(){
-		var dir = targetPos - transform.position;
-		dir = dir.normalized;
-		transform.position += speed * dir * Time.deltaTime;
-		if (Vector2.Distance(transform.position, targetPos) <= 1){
-			moving = false;
-			runToMother = false;
-		}
-		if (Vector3.Distance(mother.transform.position, transform.position) < mother.maxDistanceToDisconnectFromMother){
-			disconnect = false;
-		}
-	}
-	bool IsTooCloseToMother(Vector2 offset) {
+    public void GoToTarget()
+    {
+        var dir = targetPos - transform.position;
+        dir = dir.normalized;
+        HandleFacing(dir);
+        transform.position += speed * dir * Time.deltaTime;
+        if (Vector2.Distance(transform.position, targetPos) <= 1)
+        {
+            moving = false;
+            runToMother = false;
+        }
+        if (Vector3.Distance(mother.transform.position, transform.position) < mother.maxDistanceToDisconnectFromMother)
+        {
+            disconnect = false;
+        }
+    }
+
+    private void HandleFacing(Vector3 dir)
+    {
+        var scale = model.transform.localScale;
+        if (dir.x > 0)
+        {
+            scale.x = 1;
+        }
+        else if (dir.x < 0)
+        {
+            scale.x = -1;
+        }
+		model.transform.localScale= scale;
+    }
+
+    bool IsTooCloseToMother(Vector2 offset) {
 		return offset.x > -1 && offset.x < 1 || offset.y > -1 && offset.y < 1;
 	}
 	public void ComeToMother(){

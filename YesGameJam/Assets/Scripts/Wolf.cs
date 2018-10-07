@@ -6,6 +6,7 @@ public class Wolf : MonoBehaviour {
 	public float speed;
 	public float aggroRange;
 	public float grabRange;
+	public GameObject model;
 	public Mother mother = null;
 	Child target = null;
 	bool eatingChild = false;
@@ -29,11 +30,25 @@ public class Wolf : MonoBehaviour {
             }
         }
 	}
+	void HandleFacing(Vector2 dir) {
+		var scale = model.transform.localScale;
+        if (dir.x > 0)
+        {
+            scale.x = 1;
+        }
+        else if (dir.x < 0)
+        {
+            scale.x = -1;
+        }
+
+		model.transform.localScale= scale;
+	}
 
     private void HuntChild()
     {
         var pos = transform.position;
         pos = Vector2.MoveTowards(pos, target.transform.position, speed * Time.deltaTime);
+		HandleFacing((target.transform.position - pos).normalized);
         transform.position = pos;
         if (Vector2.Distance(pos, target.transform.position) <= grabRange)
         {

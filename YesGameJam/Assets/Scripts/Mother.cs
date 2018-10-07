@@ -3,12 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Mother : MonoBehaviour {
-	public enum FacingDirection {
-		Left,
-		Right,
-		Up,
-		Down
-	}
+
+	Vector2 facing;
 	public float speed;
 	public float rangeOfMotherYelling;
 	public float attackDamage;
@@ -16,7 +12,10 @@ public class Mother : MonoBehaviour {
 	public float attackRange;
 	public KeyCode attackButton;
 	public List<Child> children = new List<Child>();
+	public GameObject model = null;
+	public Animator anim = null;
     private bool attackOrder = false;
+	
 
     // Use this for initialization
     void Start () {
@@ -33,10 +32,8 @@ public class Mother : MonoBehaviour {
 	
 	private void FixedUpdate() {
 		if (attackOrder) {
-			Debug.Log("Attack");
 			var hit = Physics2D.Raycast(this.transform.position, Vector2.right, attackRange);
 			if (hit.collider != null && hit.collider.tag == "Wolf") {
-				Debug.Log(hit.collider.gameObject.name);
 			}
 			attackOrder = false;
 		}
@@ -44,7 +41,7 @@ public class Mother : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-		if (Input.GetKey(attackButton)){
+		if (Input.GetKeyDown(attackButton)){
 			attackOrder = true;
 		}
         HandleMovement();
@@ -67,8 +64,23 @@ public class Mother : MonoBehaviour {
 
     private void HandleMovement()
     {
-        var horizontal = Input.GetAxis("Horizontal");
-        var vertical = Input.GetAxis("Vertical");
+        var horizontal = Input.GetAxisRaw("Horizontal");
+        var vertical = Input.GetAxisRaw("Vertical");
+		var scale = model.transform.localScale;
+		
+		if (horizontal > 0){
+			facing.x = 1;
+		} else if (horizontal < 0){
+			facing.x = -1;
+		}
+		anim.SetBool("IsWalking", horizontal != 0 ? true : false);
+		if (vertical > 0) {
+			facing.y = 1;
+		} else {
+			facing.y = -1;
+		}
+		scale.x = facing.x;
+		model.transform.localScale = scale; 
         var pos = this.transform.position;
         pos.x += speed * Time.deltaTime * horizontal;
         pos.y += speed * Time.deltaTime * vertical;
