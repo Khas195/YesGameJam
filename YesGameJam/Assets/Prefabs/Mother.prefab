@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4856855976378816}
   - component: {fileID: 212210527830634650}
   - component: {fileID: 114904031202385922}
-  - component: {fileID: 50973902727147584}
+  - component: {fileID: 50098309384352960}
   m_Layer: 0
   m_Name: Mother
   m_TagString: Mother
@@ -42,7 +42,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &50973902727147584
+--- !u!50 &50098309384352960
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 1
@@ -60,7 +60,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!114 &114904031202385922
 MonoBehaviour:
@@ -73,10 +73,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f02a8a41918d28a4dad4d0d90d661d10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 5
   rangeOfMotherYelling: 14
   attackDamage: 0
   maxDistanceToDisconnectFromMother: 15
+  attackRange: 1
+  attackButton: 102
   children:
   - {fileID: 0}
   - {fileID: 0}

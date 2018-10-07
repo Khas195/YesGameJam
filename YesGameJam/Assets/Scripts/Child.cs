@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,12 +11,16 @@ public class Child : MonoBehaviour {
 	bool disconnect = false;
 	bool runToMother = false;
 	Vector3 targetPos;
-	// Use this for initialization
-	void Start () {
+    private Wolf capturer;
+    private bool isCaptured;
+
+    // Use this for initialization
+    void Start () {
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		if (isCaptured) return;
 		var distanceFromMothertoChild = Vector3.Distance(mother.transform.position, transform.position ); 
 		if (!disconnect || runToMother) {
 			if (  distanceFromMothertoChild > maxDistanceFromMother){
@@ -34,16 +39,23 @@ public class Child : MonoBehaviour {
 		} 		
 	}
 	public void FindMother(){
-		var offset = maxDistanceFromMother * Random.insideUnitSphere;
+		var offset = maxDistanceFromMother * UnityEngine.Random.insideUnitSphere;
 		while (IsTooCloseToMother(offset))
 		{
-			offset = maxDistanceFromMother * Random.insideUnitSphere;
+			offset = maxDistanceFromMother * UnityEngine.Random.insideUnitSphere;
 		}
 		targetPos = mother.transform.position + offset;
 		targetPos.z = 1;
 		moving = true;
 	}
-	public void GoToTarget(){
+
+    public void CapturedBy(Wolf wolf)
+    {
+		this.capturer = wolf;
+		isCaptured = true;
+    }
+
+    public void GoToTarget(){
 		var dir = targetPos - transform.position;
 		dir = dir.normalized;
 		transform.position += speed * dir * Time.deltaTime;

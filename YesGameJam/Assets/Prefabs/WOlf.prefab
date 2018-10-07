@@ -21,11 +21,10 @@ GameObject:
   - component: {fileID: 4163026610908028}
   - component: {fileID: 212028523144483252}
   - component: {fileID: 114446036225942960}
-  - component: {fileID: 58426898289762596}
   - component: {fileID: 61789595955926230}
   m_Layer: 0
   m_Name: WOlf
-  m_TagString: Untagged
+  m_TagString: Wolf
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -43,21 +42,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &58426898289762596
-CircleCollider2D:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1885067817757802}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 3
 --- !u!61 &61789595955926230
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -94,9 +78,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d5d4cdcf00f14946aa6af2d8a51aac6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
+  speed: 6
   aggroRange: 4
-  aggroCollider: {fileID: 58426898289762596}
+  grabRange: 1
+  mother: {fileID: 0}
 --- !u!212 &212028523144483252
 SpriteRenderer:
   m_ObjectHideFlags: 1
